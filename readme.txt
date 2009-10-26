@@ -1,7 +1,7 @@
 === FortuneKookie Widget ===
 Plugin Name: 		FortuneKookie Fortunes
 Contributors: 		blendium
-Version:			0.9.1.0
+Version:			0.9.1.1
 Requires at least:	2.7
 Tested up to:		2.8.5
 Stable tag: 		trunk
@@ -45,11 +45,14 @@ This is a site where one can save and share fortune cookie fortunes. The pool of
 
 == Screenshots ==
 
-1. Fully Install FortuneKookie widget - All options
-2. Fully Install FortuneKookie widget - Minumum options
+1. Fully Installed FortuneKookie widget - All options
+2. Fully Installed FortuneKookie widget - Minumum options
 3. View of the configuration screen
 
 == Changelog ==
+
+= 0.9.1.1 =
+	* Grammer fix in the readme.txt file
 
 = 0.9.1.0 =
 	* Added option to show / hidevthe "Powered by: FortuneKookie" link
