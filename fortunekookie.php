@@ -5,15 +5,20 @@ Description: This plugin adds a sidebar widget to display a random fortune cooki
 Author: Blendium
 Author URI: http://www.fortunekookie.com/
 Plugin URI: http://wordpress.fortunekookie.com/
-Version: 0.9.1.1
+Version: 0.9.2.0
 License: GPL
 
 This software comes without any warranty, express or otherwise.
 
+Feature Requests:
+1) View fortune with cool fortune cookie background, example: http://www.fortunekookie.com/view.php?qs=4937
+2) Multiple fortunes added to sidebar
+3) Different (better?) display of fortune
+4) Ability to add fortune to posts or pages
 
-Upcoming Features:
-1) Description to appear when viewing FortuneKookie widget in the "Available Widgets" screen
-2) View fortune with fortune cookie background
+Additional Notes:
+In order to complete the setup for this widget you must register for your security code on http://wordpress.fortunekookie.com.
+NOTE: For the short term, the general code `dbc6f4b1aa48acc5c8ceb9dae38a91af` will function properly.
 
 */
 
@@ -87,6 +92,9 @@ function widget_fortunekookie_init() {
 
 	if ( !function_exists('register_sidebar_widget') )
 		return;
+
+	//Proper name of widget
+	$name = __('FortuneKookie');
 
 	function widget_fortunekookie($args) {
 
@@ -168,8 +176,6 @@ function widget_fortunekookie_init() {
 	// Settings form
 	function widget_fortunekookie_control() {
 
-		global $pluginrelativedir;
-
 		// Get options
 		$options = get_option('widget_fortunekookie');
 		// options exist? if not set defaults
@@ -242,12 +248,20 @@ function widget_fortunekookie_init() {
 		echo '<input type="hidden" id="fortunekookie-submit" name="fortunekookie-submit" value="1" />';
 	}
 
+	$widget_ops = array(
+	    'classname' => 'widget_fortunekookie',
+	    'description' => __('Plugin adds a sidebar widget to display a random fortune cookie fortune.'));
+	
+	$control_ops = array(
+	    'width' => 250,
+	    'height' => 200,
+	    'id_base' => 'widget_fortunekookie_control');
 
 	// Register widget for use
-	register_sidebar_widget(array('FortuneKookie', 'widgets'), 'widget_fortunekookie');
+	wp_register_sidebar_widget('widget_fortunekookie-1', $name, 'widget_fortunekookie', $widget_ops);
 
-	// Register settings for use, 300x200 pixel form
-	register_widget_control(array('FortuneKookie', 'widgets'), 'widget_fortunekookie_control', 250, 200);
+	// Register settings for use
+	wp_register_widget_control('widget_fortunekookie-1', $name, 'widget_fortunekookie_control', $control_ops);
 }
 
 // Run code and init
