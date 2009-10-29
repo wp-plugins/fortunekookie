@@ -5,22 +5,26 @@ Description: This plugin adds a sidebar widget to display a random fortune cooki
 Author: Blendium
 Author URI: http://www.fortunekookie.com/
 Plugin URI: http://wordpress.fortunekookie.com/
-Version: 0.9.2.0
+Version: 0.9.3.0
 License: GPL
 
 This software comes without any warranty, express or otherwise.
 
 Feature Requests:
-1) View fortune with cool fortune cookie background, example: http://www.fortunekookie.com/view.php?qs=4937
-2) Multiple fortunes added to sidebar
-3) Different (better?) display of fortune
-4) Ability to add fortune to posts or pages
+1) View fortune within the blog via a really cool web 2.0 fortune cookie background
+2) Fully Internationalize the plugin: http://codex.wordpress.org/I18n_for_WordPress_Developers
+3) Multiple fortunes added to sidebar
+4) Different (better?) display of fortune components
+5) Ability to add fortune to posts or pages
+6) eCommerce hook into spreadshirt shop: http://fortunekookie.spreadshirt.com/
 
 Additional Notes:
 In order to complete the setup for this widget you must register for your security code on http://wordpress.fortunekookie.com.
 NOTE: For the short term, the general code `dbc6f4b1aa48acc5c8ceb9dae38a91af` will function properly.
 
 */
+
+define('FORTUNEKOOKIE_VERSION', '0.9.3.0');
 
 //Required is the FortuneKookie API Class
 require "includes/fortunekookie.api.class.php";
@@ -87,6 +91,36 @@ function get_lucky_nbr($xmlcode) {
 return $lucky_nbr;
 }
 
+//This function is to retrieve the "forune cookie ID" data elements from the FortuneKookie XML file
+function get_fortune_id($xmlcode) {
+	$offset = 0;
+	$xmlcode = trim($xmlcode);
+	$cookie_id = "";
+
+    //find the start tag
+    $start_tag=strpos($xmlcode,"fk_id=",$offset);
+    $start_tag_length = strlen("fk_id=");
+
+	$x = ($start_tag + $start_tag_length + 1);
+	$y = 10;
+
+    //split off both tags from lucky number stream
+    $cookie_id = intval(substr($xmlcode,$x,$y));
+
+return $cookie_id;
+}
+
+//Alert admin to register a FortuneKookie security code
+function fortunekookie_activate() {
+//	if ( !get_option('widget_fortunekookie') && !isset($_POST['submit']) ) {
+		function fortunekookie_alert() {
+			echo "<div id='fortunekookie-alert' class='updated fade'><p><strong>".__('FortuneKookie is almost ready.')."</strong> ".__('You must first <a href="http://wordpress.fortunekookie.com/#register" target="_blank">register and enter your FortuneKookie code</a> in the widget for it to work.')."</p></div>";
+		}
+		add_action('admin_notices', 'fortunekookie_alert');
+		return;
+//	}
+}
+
 //Main widget function
 function widget_fortunekookie_init() {
 
@@ -108,6 +142,7 @@ function widget_fortunekookie_init() {
 		$fk_image_dir = get_bloginfo('wpurl')."/wp-content/plugins/".dirname(plugin_basename(__FILE__))."/images/";
 		$fk_code 	= $options['fk_code'];  	// Your FortuneKookie 10-digit security code for WordPress Widget (default value: 1022200909)
 		$show_logo	= $options['show_logo'];  	// Option to show the FortuneKookie logo
+		$show_link	= $options['show_link'];  	// Option to show a link to the graphical version of the fortune cookie
 		$show_back  = $options['show_back'];  	// Option to show backside of the fortune
 		$show_nbr   = $options['show_nbr'];  	// Option to show lucky numbers on the fortune
 		$show_fk	= $options['show_fk'];  	// Option to show the Powered by FortuneKookie link
@@ -129,13 +164,21 @@ function widget_fortunekookie_init() {
 		$xml = $fortune->getFortunes($nbr, $fk_code);
 		
 		//Parse the XML into fortune cookie fortune components of one (1) cookie
+		$fortune_id = get_fortune_id($xml);
 		$fortune_front = get_tag_contents($xml,"front");
 		$fortune_back = get_tag_contents($xml,"back");
 		$fortune_nbr = get_lucky_nbr($xml);
 
 		//Display the random fortune cookie fortune and options
 		$fortune_cookie = "<li>\n"; 
+		if ($show_link)
+			{
+			$fortune_cookie .= "<a href=\"http://www.fortunekookie.com/view.php?qs=".$fortune_id."\" target=\"_blank\">".$fortune_front."</a>";
+			}
+		else
+			{
 			$fortune_cookie .= $fortune_front;
+			}
 		$fortune_cookie .= "</li>\n";
 
 		if ($show_back)
@@ -181,8 +224,9 @@ function widget_fortunekookie_init() {
 		// options exist? if not set defaults
 		if ( !is_array($options) )
 			$options = array(
-							'fk_code' 	=> 'dbc6f4b1aa48acc5c8ceb9dae38a91af',
+							'fk_code' 	=> '1234567890abcdef1234567890abcdef',
 							'show_logo'	=> '1',
+							'show_link'	=> '1',
 							'show_back' => '1',
 							'show_nbr'	=> '1',
 							'show_fk'	=> '1',
@@ -195,6 +239,7 @@ function widget_fortunekookie_init() {
 			// Remember to sanitize and format use input appropriately.
 			$options['fk_code'] 	= strip_tags(stripslashes($_POST['fortunekookie-code']));
 			$options['show_logo'] 	= $_POST['fortunekookie-logo'];
+			$options['show_link'] 	= $_POST['fortunekookie-link'];
 			$options['show_back']   = $_POST['fortunekookie-back'];
 			$options['show_nbr'] 	= $_POST['fortunekookie-nbr'];
 			$options['show_fk'] 	= $_POST['fortunekookie-fk-show'];
@@ -205,6 +250,7 @@ function widget_fortunekookie_init() {
 		// Get options for form fields to show
 		$fk_code	= htmlspecialchars($options['fk_code'], ENT_QUOTES);
 		$show_logo	= intval($options['show_logo'], ENT_QUOTES);
+		$show_link	= intval($options['show_link'], ENT_QUOTES);
 		$show_back	= intval($options['show_back'], ENT_QUOTES);
 		$show_nbr	= intval($options['show_nbr'], ENT_QUOTES);
 		$show_fk	= intval($options['show_fk'], ENT_QUOTES);
@@ -213,6 +259,8 @@ function widget_fortunekookie_init() {
 		//Prepare defaults and values for radio buttons
 		if(isset($show_logo) && $show_logo == 1){$show_logo_on = " checked=\"checked\"";}
 		if(isset($show_logo) && $show_logo == 0){$show_logo_off = " checked=\"checked\"";}
+		if(isset($show_link) && $show_link == 1){$show_link_on = " checked=\"checked\"";}
+		if(isset($show_link) && $show_link == 0){$show_link_off = " checked=\"checked\"";}
 		if(isset($show_back) && $show_back == 1){$show_back_on = " checked=\"checked\"";}
 		if(isset($show_back) && $show_back == 0){$show_back_off = " checked=\"checked\"";}
 		if(isset($show_nbr) && $show_nbr == 1){$show_nbr_on = " checked=\"checked\"";}
@@ -232,6 +280,10 @@ function widget_fortunekookie_init() {
 		echo '<p style="text-align:left;">' . __('FortuneKookie logo:') . '
 				<input id="fortunekookie-logo-on" name="fortunekookie-logo" type="radio" value="1"'.$show_logo_on.' /><label for="fortunekookie-logo-on">On</label>
 				<input id="fortunekookie-logo-off" name="fortunekookie-logo" type="radio" value="0"'.$show_logo_off.' /><label for="fortunekookie-logo-off">Off</label>
+				</label></p>';
+		echo '<p style="text-align:left;">' . __('Link to cookie graphic:') . '
+				<input id="fortunekookie-link-on" name="fortunekookie-link" type="radio" value="1"'.$show_link_on.' /><label for="fortunekookie-link-on">On</label>
+				<input id="fortunekookie-link-off" name="fortunekookie-link" type="radio" value="0"'.$show_link_off.' /><label for="fortunekookie-link-off">Off</label>
 				</label></p>';
 		echo '<p style="text-align:left;">' . __('Show back of fortune:') . '
 				<input id="fortunekookie-back-on" name="fortunekookie-back" type="radio" value="1"'.$show_back_on.' /><label for="fortunekookie-back-on">On</label>
@@ -264,7 +316,14 @@ function widget_fortunekookie_init() {
 	wp_register_widget_control('widget_fortunekookie-1', $name, 'widget_fortunekookie_control', $control_ops);
 }
 
-// Run code and init
+/**
+ * On activation, alert the blog admin - Need user to register his / her own security code.
+ */
+//add_action('init', 'fortunekookie_activate');
+
+/**
+ * Run code and initialize the widget
+ */
 add_action('widgets_init', 'widget_fortunekookie_init');
 
 ?>
