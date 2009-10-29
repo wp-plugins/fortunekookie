@@ -5,7 +5,7 @@ Description: This plugin adds a sidebar widget to display a random fortune cooki
 Author: Blendium
 Author URI: http://www.fortunekookie.com/
 Plugin URI: http://wordpress.fortunekookie.com/
-Version: 0.9.3.0
+Version: 0.9.3.1
 License: GPL
 
 This software comes without any warranty, express or otherwise.
@@ -24,7 +24,7 @@ NOTE: For the short term, the general code `dbc6f4b1aa48acc5c8ceb9dae38a91af` wi
 
 */
 
-define('FORTUNEKOOKIE_VERSION', '0.9.3.0');
+define('FORTUNEKOOKIE_VERSION', '0.9.3.1');
 
 //Required is the FortuneKookie API Class
 require "includes/fortunekookie.api.class.php";

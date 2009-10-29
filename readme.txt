@@ -1,7 +1,7 @@
 === FortuneKookie Widget ===
 Plugin Name: 		FortuneKookie Fortunes
 Contributors: 		blendium
-Version:			0.9.3.0
+Version:			0.9.3.1
 Requires at least:	2.7
 Tested up to:		2.8.5
 Stable tag: 		trunk
@@ -13,11 +13,11 @@ This WordPress plugin adds a sidebar widget to display a random fortune cookie f
 
 This WordPress plugin adds a sidebar widget to display a random fortune cookie fortune. The database hosted on FortuneKookie.com has over 1500 unique fortunes and each fortune includes the front message, the back word(s), and the lucky numbers.
 
-**PLEASE NOTE**: If your plugin has stopped functioning, you will need to register for your security code on http://wordpress.fortunekookie.com/#register. Simply enter your email address and the code will be sent to you.
+**PLEASE NOTE**: If your plugin has stopped functioning, you will need to register for your security code on http://wordpress.fortunekookie.com/#register Simply enter your email address and the code will be sent to you.
 
 == Installation ==
 
-In order to complete the setup for this widget you must register for your security code on http://wordpress.fortunekookie.com/#register. *NOTE*: Once we reach v0.9.4.0 of the FortuneKookie plugin, the generic code `dbc6f4b1aa48acc5c8ceb9dae38a91af` will *no* longer function.
+In order to complete the setup for this widget you must register for your security code on http://wordpress.fortunekookie.com/#register *NOTE*: Once we reach v0.9.4.0 of the FortuneKookie plugin, the generic code `dbc6f4b1aa48acc5c8ceb9dae38a91af` will *no* longer function.
 
 1. Upload the `fortunekookie` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
@@ -53,6 +53,9 @@ This is a site where one can save and share fortune cookie fortunes. The pool of
 4. View of the configuration screen
 
 == Changelog ==
+
+= 0.9.3.1 =
+*Another spelling fix
 
 = 0.9.3.0 =
 * Enhancements to back-end API call to allow for graphic display of fortune cookie
