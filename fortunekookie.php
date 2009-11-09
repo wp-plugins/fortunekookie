@@ -5,7 +5,7 @@ Description: This plugin adds a sidebar widget to display a random fortune cooki
 Author: Blendium
 Author URI: http://www.fortunekookie.com/
 Plugin URI: http://wordpress.fortunekookie.com/
-Version: 0.9.3.1
+Version: 0.9.4.0
 License: GPL
 
 This software comes without any warranty, express or otherwise.
@@ -18,13 +18,16 @@ Feature Requests:
 5) Ability to add fortune to posts or pages
 6) eCommerce hook into spreadshirt shop: http://fortunekookie.spreadshirt.com/
 
+Bugs to Correct:
+1) Fortune Server does not error on positive security code and negative verification flag. Need to add check and return proper error codes.
+
 Additional Notes:
 In order to complete the setup for this widget you must register for your security code on http://wordpress.fortunekookie.com.
-NOTE: For the short term, the general code `dbc6f4b1aa48acc5c8ceb9dae38a91af` will function properly.
+NOTE: The generic code `dbc6f4b1aa48acc5c8ceb9dae38a91af` will NO longer function as of this version.
 
 */
 
-define('FORTUNEKOOKIE_VERSION', '0.9.3.1');
+define('FORTUNEKOOKIE_VERSION', '0.9.4.0');
 
 //Required is the FortuneKookie API Class
 require "includes/fortunekookie.api.class.php";
@@ -112,7 +115,7 @@ return $cookie_id;
 
 //Alert admin to register a FortuneKookie security code
 function fortunekookie_activate() {
-//	if ( !get_option('widget_fortunekookie') && !isset($_POST['submit']) ) {
+//	if ( !get_option('widget_fortunekookie')) {
 		function fortunekookie_alert() {
 			echo "<div id='fortunekookie-alert' class='updated fade'><p><strong>".__('FortuneKookie is almost ready.')."</strong> ".__('You must first <a href="http://wordpress.fortunekookie.com/#register" target="_blank">register and enter your FortuneKookie code</a> in the widget for it to work.')."</p></div>";
 		}
