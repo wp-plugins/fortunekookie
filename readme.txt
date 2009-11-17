@@ -1,9 +1,9 @@
 === FortuneKookie Widget ===
 Plugin Name: 		FortuneKookie Fortunes
 Contributors: 		blendium
-Version:			0.9.4.0
+Version:			1.0.0.0
 Requires at least:	2.7
-Tested up to:		2.8.5
+Tested up to:		2.8.6
 Stable tag: 		trunk
 Tags:		 		fortune cookie, fortunes, fortunekookie, sidebar
 
@@ -11,9 +11,11 @@ This WordPress plugin adds a sidebar widget to display a random fortune cookie f
 
 == Description ==
 
-**PLEASE NOTE**: After November 16, 2009 the default security code will stop functioning, you will need to register for your security code on http://wordpress.fortunekookie.com/#register Simply enter your email address and the code will be sent to you.
-
 This WordPress plugin adds a sidebar widget to display a random fortune cookie fortune. The database hosted on FortuneKookie.com has over 1500 unique fortunes and each fortune includes the front message, the back word(s), and the lucky numbers.
+
+In addition to the sidebar widget, random fortunes may also be displayed on your posts or pages using a shortcode.
+
+**PLEASE NOTE**: You will need to register for your security code on http://wordpress.fortunekookie.com/#register Simply enter your email address and the code will be sent to you.
 
 == Installation ==
 
@@ -29,6 +31,8 @@ In order to complete the setup of this widget you must register for your securit
 
 *Congratulations!* Your FortuneKookie widget is now working!
 
+If you would like to see a random fortune cookie message on one of your Pages or one of your Posts, place this shortcode anywhere: `[fortunekookie|random=2]`
+
 FortuneKookie may work on WordPress releases prior to 2.7 but this has not been tested.
 
 == Frequently Asked Questions ==
@@ -37,7 +41,10 @@ FortuneKookie may work on WordPress releases prior to 2.7 but this has not been 
 This widget interfaces with FortuneKookie.com and pulls a random fortune cookie message from its database. Then, displays the fortune on your sidebar of your blog.
 
 = Can I display more than one fortune at a time? =
-Not with this version of the widget.
+Not with this version of the widget. However, in addition to the sidebar widget, you can also get a random fortune message in a Post or a Page
+
+= How can I get a fortune cookie fortune in one of my posts? =
+Add this shortcode anywhere you'd like to see the fortune cookie fortune: `[fortunekookie|random=2]`
 
 = What is the security code? =
 This code allows the FortuneKookie servers to track the source of the API call. Please register for your security code on http://wordpress.fortunekookie.com/#register by simply using your e-mail address. The generic 32-digit security code *no* longer functions.
@@ -48,24 +55,35 @@ This is a site where one can save and share fortune cookie fortunes. The pool of
 == Screenshots ==
 
 1. Fully Installed FortuneKookie widget - All options
-2. Fully Installed FortuneKookie widget - Minumum options
+2. Fully Installed FortuneKookie widget - Minimum options
 3. Graphic version of the fortune cookie via cookie message link
 4. View of the configuration screen
 
 == Features ==
 
-* Displays a random fortune cookie fortune from a database hosted on FortuneKookie.com.
+* Displays a random fortune cookie fortune on your sidebar from a database hosted on FortuneKookie.com.
 * Ability to show or hide the back word(s).
 * Ability to show or hide the lucky numbers.
 * View the fortune via a special fortune cookie graphic.
+* Display a random fortune cookie fortune from any Post or any Page.
+
+== Shortcode Catalog ==
+`[fortunekookie|random=1]` - Displays a random fortune including the back word(s) and lucky numbers
+`[fortunekookie|random=2]` - Displays a random fortune including the lucky numbers
+`[fortunekookie|random=3]` - Displays a random fortune including the back word(s)
+`[fortunekookie|random=4]` - Displays only the front of a random fortune
 
 == Resources ==
 
 * Homepage for this plugin: `http://wordpress.fortunekookie.com/`
 * Documentation: `http://wordpress.fortunekookie.com/`
-* Register for security code: `ttp://wordpress.fortunekookie.com/#register`
+* Register for security code: `http://wordpress.fortunekookie.com/#register`
 
 == Changelog ==
+
+= 1.0.0.0 =
+* Added ability to view a random fortune cookie fortune from a Post or a Page using this shortcode: `[fortunekookie|random=2]` 
+* Optimized the code for faster load times
 
 = 0.9.4.0 =
 * Generic security code **no** longer functions. Register on http://wordpress.fortunekookie.com/#register by simply using your e-mail address to request your own 32-digit security code.
@@ -82,11 +100,11 @@ This is a site where one can save and share fortune cookie fortunes. The pool of
 = 0.9.2.0 =
 * Description appears when viewing FortuneKookie widget in the "Available Widgets" screen
 * Completed the security code registration screens (available here: http://wordpress.fortunekookie.com/)
-* Streamlined code snipet, should be a bit more efficient
+* Streamlined code snippet, should be a bit more efficient
 * Started to Internationalize the screen text
 
 = 0.9.1.1 =
-* Grammer fix in the readme.txt file
+* Grammar fix in the readme.txt file
 
 = 0.9.1.0 =
 * Added option to show / hide the "Powered by: FortuneKookie" link
