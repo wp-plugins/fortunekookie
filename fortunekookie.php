@@ -5,7 +5,7 @@ Description: This plugin adds a sidebar widget to display a random fortune cooki
 Author: Blendium
 Author URI: http://www.fortunekookie.com/
 Plugin URI: http://wordpress.fortunekookie.com/
-Version: 1.0.0.0
+Version: 1.0.1.0
 License: GPL
 
 This software comes without any warranty, express or otherwise.
@@ -23,11 +23,11 @@ Bugs to Correct:
 
 Additional Notes:
 In order to complete the setup for this widget you must register for your security code on http://wordpress.fortunekookie.com.
-NOTE: The generic code `dbc6f4b1aa48acc5c8ceb9dae38a91af` NO longer function...
+NOTE: The generic code `1234567890abcdef1234567890abcdef` is simply a place-holder and does NOT function...
 
 */
 
-define('FORTUNEKOOKIE_VERSION', '1.0.0.0');
+define('FORTUNEKOOKIE_VERSION', '1.0.1.0');
 define('FK_INCLUDE_DIR', WP_CONTENT_DIR.'/plugins/'.dirname(plugin_basename(__FILE__)).'/includes/');
 define('FK_IMAGE_DIR', WP_CONTENT_URL.'/plugins/'.dirname(plugin_basename(__FILE__)).'/images/');
 
@@ -244,23 +244,23 @@ function widget_fortunekookie_init() {
 		if ( $_POST['fortunekookie-submit'] ) {
 
 			// Remember to sanitize and format use input appropriately.
-			$options['fk_code'] 	= strip_tags(stripslashes($_POST['fortunekookie-code']));
+			$options['fk_code'] 	= strip_tags(stripslashes(strtolower($_POST['fortunekookie-code'])));
 			$options['show_logo'] 	= $_POST['fortunekookie-logo'];
 			$options['show_link'] 	= $_POST['fortunekookie-link'];
 			$options['show_back']   = $_POST['fortunekookie-back'];
 			$options['show_nbr'] 	= $_POST['fortunekookie-nbr'];
 			$options['show_fk'] 	= $_POST['fortunekookie-fk-show'];
-			$options['title']   	= strip_tags(stripslashes($_POST['fortunekookie-title']));
+			$options['title']   	= strip_tags(stripslashes(trim($_POST['fortunekookie-title'])));
 			update_option('widget_fortunekookie', $options);
 		}
 
 		// Get options for form fields to show
 		$fk_code	= htmlspecialchars($options['fk_code'], ENT_QUOTES);
-		$show_logo	= intval($options['show_logo'], ENT_QUOTES);
-		$show_link	= intval($options['show_link'], ENT_QUOTES);
-		$show_back	= intval($options['show_back'], ENT_QUOTES);
-		$show_nbr	= intval($options['show_nbr'], ENT_QUOTES);
-		$show_fk	= intval($options['show_fk'], ENT_QUOTES);
+		$show_logo	= intval($options['show_logo']);
+		$show_link	= intval($options['show_link']);
+		$show_back	= intval($options['show_back']);
+		$show_nbr	= intval($options['show_nbr']);
+		$show_fk	= intval($options['show_fk']);
 		$title		= htmlspecialchars($options['title'], ENT_QUOTES);
 
 		//Prepare defaults and values for radio buttons
